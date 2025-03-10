@@ -25,10 +25,12 @@ X, y = load_breast_cancer(return_X_y=True)
 
 # reduce dimensions
 X = X[:, :3]
+var_names = [f"test_{i}" for i in range(X.shape[1])]
 
 # turtles model
 model = LogReg(method="lbfgs")
-model.fit(X, y)
+model.fit(X, y, var_names=var_names)
+summary = model.summary()
 preds = model.predict(X)
 
 # statsmodels
@@ -50,6 +52,7 @@ def test_logreg():
         7. Model predictions (to ensure .predict() works)
     """
 
+    assert all([col in summary["Variable"].unique() for col in var_names])
     assert model.observations == sm_model.nobs
     assert model.degrees_of_freedom == sm_model.df_resid
     np.isclose(

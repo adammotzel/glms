@@ -39,13 +39,12 @@ X = X.to_numpy()
 exposure = exposure.to_numpy().reshape(exposure.shape[0], 1)
 y = y.to_numpy().reshape(y.shape[0], 1)
 
+var_names = [f"test_{i}" for i in range(X.shape[1])]
+
 # fit model using l-bfgs
 model = PoissonReg(method="lbfgs")
-model.fit(
-    X,
-    y,
-    exposure
-)
+model.fit(X, y, exposure, var_names=var_names)
+summary = model.summary()
 preds = model.predict(X)
 
 # fit statsmodels
@@ -74,6 +73,7 @@ def test_poissonreg():
         7. Model predictions (to ensure .predict() works)
     """
 
+    assert all([col in summary["Variable"].unique() for col in var_names])
     assert model.observations == sm_model.nobs
     assert model.degrees_of_freedom == sm_model.df_resid
     np.isclose(

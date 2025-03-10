@@ -77,6 +77,7 @@ from ..._utils import (
     _validate_args,
     _add_intercept
 )
+from ._validation import _validate_init
 
 
 class GLM:
@@ -89,10 +90,10 @@ class GLM:
     def __init__(
         self,
         max_iter: int = 1000, 
-        learning_rate: float = 0.01,
+        learning_rate: float = 0.1,
         tolerance: float = 0.000001,
         beta_momentum: float = 0.9,
-        method: Literal["newton", "grad", "lbfgs"] = "newton"
+        method: Literal["newton", "grad", "lbfgs"] = "lbfgs"
     ):
         """
         Initialize the GLM with the specified hyperparameters.
@@ -101,10 +102,10 @@ class GLM:
         ----------
         max_iter : Optional[int], default=1000
             The maximum number of iterations for the fitting algorithm.
-        learning_rate : Optional[float], default=0.01
+        learning_rate : Optional[float], default=0.1
             The learning rate (step size) used to update the model parameters during 
             the fitting algorithm. Only applicable for `grad` and `newton`.
-        tolerance : float, default=0.001
+        tolerance : float, default=0.000001
             The tolerance for stopping the fitting algorithm when the change in model 
             parameters is below this value. Only applicable for `grad` and `newton`.
         beta_momentum : float, default=0.9
@@ -119,6 +120,15 @@ class GLM:
                 - `lbfgs`: Low-memory Broyden-Fletcher-Goldfarb-Shanno algorithm (quasi-Newton). 
                   Does not require hyperparameter tuning; only uses `max_iter`.
         """
+
+        _validate_init(
+            max_iter=max_iter, 
+            learning_rate=learning_rate, 
+            tolerance=tolerance, 
+            method=method, 
+            beta_momentum=beta_momentum
+        )
+
         self.max_iter = max_iter
         self.learning_rate = learning_rate
         self.tolerance = tolerance
@@ -578,6 +588,8 @@ class GLM:
             }
         )
 
+        self._m, self._n = X.shape
+
         if var_names and len(var_names) != self._n:
             raise ValueError(
                 "'var_names' length must be equal to the design matrix dimensions."
@@ -585,7 +597,6 @@ class GLM:
         
         # set instance attributes
         self.variable_names = var_names
-        self._m, self._n = X.shape
         self._dof = self._m - self._n - 1
 
         # initialize

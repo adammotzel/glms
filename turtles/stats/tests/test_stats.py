@@ -237,11 +237,14 @@ def test_variance_inflation_factor_basic():
         [3, 4]
     ])
 
-    result = variance_inflation_factor(X)
+    var_names = ["Test1", "Test2"]
+
+    result = variance_inflation_factor(X, var_names)
     
     assert all(col in result.columns for col in ["Coefficient", "R-squared", "VIF"])
     assert result.shape == (2, 3)
     assert np.all(np.isposinf(result["VIF"]))
+    assert all(col in var_names for col in result["Coefficient"].unique())
 
 
 def test_variance_inflation_factor_single_predictor():

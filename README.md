@@ -2,7 +2,7 @@
 
 This project is a simple implementation of various Generalized Linear Models (GLMs) from scratch in Python. The code is packaged as a lightweight Python package named `turtles` ([I like turtles](https://www.youtube.com/watch?v=CMNry4PE93Y)), making the code easy to integrate into your own projects.
 
-The package is written using `numpy` (for linear algebra operations), `scipy` (for some optimization), `pandas` (for tabular operations), and `matplotlib` (for plotting).
+The package is written using `numpy` (for linear algebra operations), `scipy` (for some optimization), `pandas` (for tabular operations), `matplotlib` (for plotting), and `pydantic` (for validation).
 
 The following models have been implemented in this repository:
 

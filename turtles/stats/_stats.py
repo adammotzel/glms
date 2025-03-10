@@ -2,7 +2,7 @@
 Various statistical functions.
 """
 
-from typing import Optional, Tuple, Dict
+from typing import Optional, Tuple, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -71,7 +71,10 @@ def calculate_errors(
     return response
 
 
-def variance_inflation_factor(X: np.ndarray) -> pd.DataFrame:
+def variance_inflation_factor(
+    X: np.ndarray,
+    var_names: Optional[List[str]] = None
+) -> pd.DataFrame:
     """
     Calculate Variance Inflation Factor (VIF) for all predictors in the 
     input matrix.
@@ -84,6 +87,10 @@ def variance_inflation_factor(X: np.ndarray) -> pd.DataFrame:
     ----------
     X : np.ndarray, shape (m, n)
         Design matrix. Should not include an intercept.
+    var_names : Optional[List[str]]
+        Variable names. If not passed, defaults to `x_i` where `i` is the order of 
+        the dimension in the input matrix. Names must appear in the order that they 
+        do in the input matrix.
 
     Returns
     -------
@@ -134,6 +141,9 @@ def variance_inflation_factor(X: np.ndarray) -> pd.DataFrame:
         vifs["VIF"].append(vif.item())
 
         vifs["Coefficient"].append(f"x{idx}")
+
+    if var_names is not None:
+        vifs["Coefficient"] = var_names 
 
     return pd.DataFrame(vifs)
 

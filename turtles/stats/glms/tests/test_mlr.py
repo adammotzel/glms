@@ -21,12 +21,14 @@ prec = 5
 # sample data
 X, y = load_diabetes(return_X_y=True)
 y = y.reshape(y.shape[0], 1)
+var_names = [f"test_{i}" for i in range(X.shape[1])]
 
 # instantiate turtles model
 model = MLR()
 
 # fit model using all predictors
-model.fit(X=X, y=y)
+model.fit(X=X, y=y, var_names=var_names)
+summary = model.summary()
 preds = model.predict(X)
 
 # statsmodels model
@@ -51,6 +53,7 @@ def test_mlr():
         10. Model predictions (to ensure .predict() works)
     """
 
+    assert all([col in summary["Variable"].unique() for col in var_names])
     assert model.observations == sm_model.nobs
     assert model.degrees_of_freedom == sm_model.df_resid
     np.isclose(
