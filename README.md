@@ -52,9 +52,9 @@ source venv/Scripts/activate
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
-**NOTE**: `requirements.txt` contains the "dev" dependencies, some of which are not part of the packaged distribution. It also includes the `turtles` package in editable mode (represented by the `-e .` line in the requirements file).
+**NOTE**: `requirements-dev.txt` contains the "dev" dependencies, some of which are not part of the packaged distribution. It also includes the `turtles` package in editable mode (represented by the `-e .` line in the requirements file).
 
 See the `pyproject.toml` file for true package dependencies.
 
