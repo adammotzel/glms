@@ -1,5 +1,5 @@
 """
-Validation for class instantiation validation.
+Validation for GLM class instantiation.
 """
 
 import json
