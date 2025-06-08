@@ -2,6 +2,11 @@
 
 An implementation of various Generalized Linear Models (GLMs) from scratch, written in Python.
 
+I created this package as a personal refresher on GLMs, the underlying optimization techniques, and general statistical modeling. It's intended as a learning tool and a reference for building and understanding these models from the ground up.
+
+
+## Overview
+
 The code is packaged as a Python library named `turtles` ([I like turtles](https://www.youtube.com/watch?v=CMNry4PE93Y)), making the code easy to integrate into your own projects.
 
 The package is written using `numpy` (for linear algebra operations), `scipy` (for some optimization), `pandas` (for tabular operations), `matplotlib` (for plotting), and `pydantic` (for validation).
