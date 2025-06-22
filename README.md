@@ -30,7 +30,6 @@ You can simply pip install the repo to start using the package:
 
 ```bash
 pip install git+https://github.com/adammotzel/glms.git
-cd glms
 ```
 
 
